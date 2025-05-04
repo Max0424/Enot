@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8080/enots";
+const API_URL = "https://enot.onrender.com/enots";
 
 // Load all Enots when page loads
 window.onload = () => {
@@ -72,5 +72,3 @@ async function addEnot() {
 
     loadEnots();
   }
-
-}
