@@ -38,24 +38,23 @@ async function addEnot() {
   const originalName = document.getElementById("originalName").value;
   const age = document.getElementById("age").value;
   const favoriteFood = document.getElementById("favoriteFood").value;
-  const photoUrl = document.getElementById("photoUrl").value;
+  const photoFile = document.getElementById("photoFile").files[0];
 
-  await fetch(API_URL, {
+  const formData = new FormData();
+  formData.append("originalName", originalName);
+  formData.append("age", age);
+  formData.append("favoriteFood", favoriteFood);
+  formData.append("photo", photoFile);
+
+  await fetch("https://enot.onrender.com/upload", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      originalName,
-      age,
-      favoriteFood,
-      photoUrl
-    })
+    body: formData
   });
 
   document.getElementById("enot-form").reset();
   await loadEnots();
 }
+
 
 
   async function renameEnot(id) {
