@@ -1,5 +1,7 @@
 package com.maksad.enotadoption.controller;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -20,13 +22,18 @@ public class ImageUploadController {
     @PostMapping
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
         try {
-            String filename = StringUtils.cleanPath(file.getOriginalFilename());
-            Path path = Paths.get(uploadDir).resolve(filename);
+            String originalFilename = StringUtils.getFilename(file.getOriginalFilename());
+            String safeFilename = UUID.randomUUID() + "-" + originalFilename.replaceAll("[^a-zA-Z0-9.\\-]", "_");
+            Path path = Paths.get(uploadDir).resolve(safeFilename);
             Files.createDirectories(path.getParent());
             file.transferTo(path.toFile());
-            return ResponseEntity.ok("/images/" + filename);
+
+            return ResponseEntity.ok("https://enot.onrender.com/images/" + safeFilename); // ✅ new
+
         } catch (IOException e) {
-            return ResponseEntity.internalServerError().body("Upload failed");
+            e.printStackTrace();  // Add this to see error details in console
+            return ResponseEntity.internalServerError().body("Upload failed: " + e.getMessage());
         }
     }
+
 }
