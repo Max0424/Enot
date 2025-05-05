@@ -27,6 +27,7 @@ async function loadEnots() {
       <p>User Name: ${enot.userGivenName || "None"}</p>
       <input type="text" id="name-${enot.id}" placeholder="Give a name">
       <button onclick="renameEnot(${enot.id})">Save Name</button>
+      <button onclick="deleteEnot(${enot.id})">Delete</button>
       <hr>
     `;
     list.appendChild(div);
@@ -84,3 +85,11 @@ async function addEnot() {
 
     loadEnots();
   }
+
+  async function deleteEnot(id) {
+    await fetch(`${API_URL}/${id}`, {
+      method: "DELETE"
+    });
+    await loadEnots();
+  }
+

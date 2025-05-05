@@ -1,5 +1,6 @@
 package com.maksad.enotadoption.controller;
 
+import org.springframework.http.ResponseEntity;
 import com.maksad.enotadoption.model.Enot;
 import com.maksad.enotadoption.repository.EnotRepository;
 import org.springframework.web.bind.annotation.*;
@@ -35,4 +36,15 @@ public class EnotController {
         enot.setUserGivenName(userGivenName);
         return enotRepository.save(enot);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteEnot(@PathVariable Long id) {
+        if (enotRepository.existsById(id)) {
+            enotRepository.deleteById(id);
+            return ResponseEntity.noContent().build(); // 204 No Content
+        } else {
+            return ResponseEntity.notFound().build(); // 404
+        }
+    }
+
 }
