@@ -62,3 +62,29 @@ form button:hover {
   border-radius: 6px;
   margin-top: 10px;
 }
+
+@media (max-width: 600px) {
+  body {
+    padding: 1rem;
+    max-width: 100%;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  form {
+    padding: 0.5rem;
+  }
+
+  form input,
+  form button {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+
+  #enot-list div {
+    padding: 0.75rem;
+  }
+}
+
