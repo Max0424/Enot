@@ -83,9 +83,9 @@ cd Enot
 - Open the file: `src/main/resources/application.properties`
 - Replace the values:
 ```
-spring.datasource.url=jdbc:postgresql://<host>:<port>/enotdb
-spring.datasource.username=your_db_user
-spring.datasource.password=your_db_password
+spring.datasource.url=${DB_URL}
+spring.datasource.username=${DB_USERNAME}
+spring.datasource.password=${DB_PASSWORD}
 ```
 ### 🧪 3. Build and Run the Backend
 ```bash
