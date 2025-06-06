@@ -93,3 +93,58 @@ async function addEnot() {
     await loadEnots();
   }
 
+  document.addEventListener("DOMContentLoaded", () => {
+    const sendBtn = document.getElementById("sendBtn");
+    const userInput = document.getElementById("userInput");
+    const messages = document.getElementById("messages");
+
+    if (!sendBtn || !userInput || !messages) return;
+
+    sendBtn.addEventListener("click", async () => {
+      const message = userInput.value.trim();
+      if (!message) return;
+
+      messages.innerHTML += `<div class="message user">${message}</div>`;
+      userInput.value = "";
+
+      // Show thinking message
+      const thinkingId = `thinking-${Date.now()}`;
+      messages.innerHTML += `
+        <div class="message bot" id="${thinkingId}">
+          <span class="typing-dots">
+            <span>.</span><span>.</span><span>.</span>
+          </span>
+        </div>
+      `;
+      messages.scrollTop = messages.scrollHeight;
+
+      try {
+        const res = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message })
+        });
+
+        const reply = await res.text();
+
+        // Replace "thinking" message with actual reply
+        const thinkingDiv = document.getElementById(thinkingId);
+        if (thinkingDiv) thinkingDiv.textContent = reply;
+      } catch (err) {
+        const thinkingDiv = document.getElementById(thinkingId);
+        if (thinkingDiv) thinkingDiv.textContent = "Error contacting raccoon HQ 🦝";
+      }
+    });
+  });
+
+userInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    sendBtn.click();
+  }
+});
+
+document.getElementById("clearBtn").addEventListener("click", () => {
+  document.getElementById("messages").innerHTML = "";
+});
+
+

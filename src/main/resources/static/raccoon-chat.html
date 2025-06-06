@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Raccoon Chat</title>
+    <style>
+        body { font-family: Arial; background: #f4f4f4; padding: 20px; }
+        #chatBox { background: white; padding: 15px; border-radius: 10px; max-width: 600px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .message { margin: 10px 0; }
+        .user { text-align: right; color: #0077cc; }
+        .bot { text-align: left; color: #333; }
+        #inputArea { display: flex; margin-top: 15px; }
+        #userInput { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        #sendBtn { padding: 10px 15px; margin-left: 10px; background: #0077cc; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        #sendBtn:hover { background: #005fa3; }
+    </style>
+</head>
+<body>
+
+<div id="chatBox">
+    <div id="messages"></div>
+    <div id="inputArea">
+        <input type="text" id="userInput" placeholder="Ask a raccoon question...">
+        <button id="sendBtn">Send</button>
+    </div>
+</div>
+
+<script>
+    const sendBtn = document.getElementById("sendBtn");
+    const userInput = document.getElementById("userInput");
+    const messages = document.getElementById("messages");
+
+    sendBtn.addEventListener("click", async () => {
+      const message = userInput.value.trim();
+      if (!message) return;
+
+      // Add user message to chat
+      messages.innerHTML += `<div class="message user">${message}</div>`;
+      userInput.value = "";
+
+      // Send to backend
+      try {
+        const res = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message })
+        });
+
+        const reply = await res.text();
+
+        // Add bot response
+        messages.innerHTML += `<div class="message bot">${reply}</div>`;
+        messages.scrollTop = messages.scrollHeight;
+      } catch (err) {
+        messages.innerHTML += `<div class="message bot">Error contacting raccoon HQ 🦝</div>`;
+      }
+    });
+</script>
+
+</body>
+</html>
