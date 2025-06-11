@@ -7,10 +7,16 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
 <h1>🦝 Enot Adoption Center</h1>
 <p style="text-align: center; color: #555; font-style: italic;">
     “Enot” means raccoon in Russian — playful, curious, and ready to be adopted!
 </p>
+<button id="login-btn" onclick="window.location.href='/login.html'">Log in</button>
+<button id="signup-btn" onclick="window.location.href='/signup.html'">Create an account</button>
+<button id="logout-btn" style="display: none;">Logout</button>
+
+
 
 <div id="raccoon-chat">
     <h3 style="margin-top: 0; color: #444;">🦝 Ask the Raccoon Chatbot</h3>
@@ -25,13 +31,13 @@
 
 <div id="enot-list"></div>
 
-<h2>Add New Raccoon</h2>
+<h2 id="add-heading" style="display: none;">Add a New Raccoon</h2>
 <form id="enot-form" autocomplete="off" enctype="multipart/form-data">
     <input type="text" id="originalName" placeholder="Original Name" required>
     <input type="number" id="age" placeholder="Age" required>
     <input type="text" id="favoriteFood" placeholder="Favorite Food" required>
     <input type="file" id="photoFile" accept="image/*" required>
-    <button type="submit">Add Enot</button>
+    <button type="submit">Add Raccoon</button>
 </form>
 
 <script src="js/script.js"></script>

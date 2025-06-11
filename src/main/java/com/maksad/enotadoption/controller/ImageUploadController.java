@@ -28,7 +28,8 @@ public class ImageUploadController {
             Files.createDirectories(path.getParent());
             file.transferTo(path.toFile());
 
-            return ResponseEntity.ok("https://enot.onrender.com/images/" + safeFilename); // ✅ new
+            return ResponseEntity.ok("/images/" + safeFilename);
+
 
         } catch (IOException e) {
             e.printStackTrace();  // Add this to see error details in console

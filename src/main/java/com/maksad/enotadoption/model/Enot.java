@@ -4,6 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
+
 
 @Entity
 public class Enot {
@@ -16,7 +19,12 @@ public class Enot {
     private int age;
     private String favoriteFood;
     private String photoUrl;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User owner;
     private String userGivenName;
+    private String createdBy;
+
 
     // Constructors
     public Enot() {}
@@ -40,4 +48,11 @@ public class Enot {
     public void setPhotoUrl(String photoUrl) { this.photoUrl = photoUrl; }
     public String getUserGivenName() { return userGivenName; }
     public void setUserGivenName(String userGivenName) { this.userGivenName = userGivenName; }
+    public String getCreatedBy() { return createdBy; }
+    public void setCreatedBy(String createdBy) { this.createdBy = createdBy; }
+    public User getOwner() { return owner; }
+
+    public void setOwner(User owner) { this.owner = owner; }
+
+
 }
